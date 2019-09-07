@@ -1,0 +1,96 @@
+# symlink from your home directory: ln -s git-config/git-config .gitconfig
+
+[core]
+  autocrlf = false
+  filemode = false
+[alias]
+  s = status
+  b = branch -vv
+  c = checkout
+
+  # diff variants
+  d = diff
+  dn = diff --name-only
+  ds = diff --stat
+
+  # diff variants with origin
+  dc = diff --cached
+  dh = diff HEAD
+  do = diff origin/HEAD...
+  dno = diff --name-only origin/HEAD...
+  don = diff --name-only origin/HEAD...
+  dso = diff --stat origin/HEAD...
+  dos = diff --stat origin/HEAD...
+  # diff variants with upstream
+
+  du = diff @{upstream}...
+  dnu = diff --name-only @{upstream}...
+  dun = diff --name-only @{upstream}...
+  dsu = diff --stat @{upstream}...
+  dus = diff --stat @{upstream}...
+
+  l = log --relative-date
+  ls = log --relative-date --stat
+  l1 = log --relative-date --oneline
+  lu = log --relative-date @{upstream}..
+  lo = log --relative-date origin/HEAD..
+  lf = log --relative-date --first-parent
+  lp = log --relative-date -p
+  sort-headers = !tools/git/for-all-touched-files.py -c 'tools/sort-headers.py -f [[FILENAME]]'
+
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+  conflicts = diff --name-only --diff-filter=U
+  set-upstream-master = "!f(){ git branch --set-upstream $(git rev-parse --abbrev-ref HEAD) origin/master; };f"
+  track-master = "!f(){ git branch --set-upstream $(git rev-parse --abbrev-ref HEAD) origin/master; };f"
+
+  # retires a branch by renaming it to zMONTH-DAY-name. Use: git bretire branchname
+  # this one allows autocomplete.
+  bretire = "!f(){ git branch -m $1 z$(date +%m-%d-)$1; };f"
+  #bretire_safer = "!f(){ [ "$1." != "." ] && git branch -m $1 z$(date +%m-%d-)$1 || echo "Usage: git bretire branchname"; };f"
+
+  cwip = commit -a -m "WIP"
+  cam = commit -a -m
+  commitamend = commit --amend -C HEAD
+  amenda = commit --amend -C HEAD -a
+  commitempty = commit --allow-empty
+  commitupload = commit --allow-empty -m "upload"
+  mb = merge-base @{upstream} HEAD
+[branch]
+  autosetuprebase = always
+[merge]
+  conflictstyle = diff3
+[rerere]
+  enabled = 1
+[diff]
+  renames = copies
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  commit = reverse yellow
+  meta = yellow
+  frag = magenta bold
+  func = cyan bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[color "diff-highlight"]
+  oldNormal = "red bold"
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
+
+[include]
+  # For username / github token / etc
+  path = gitconfig.local
+[user]
+	name = Daniel Murphy
+	email = dmurph@chromium.org

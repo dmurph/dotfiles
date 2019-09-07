@@ -1,0 +1,19 @@
+export GOMA_DIR=${HOME}/goma
+export CHROME_SRC=${HOME}/cr-home/src
+export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
+export GYP_GENERATORS=ninja,eclipse
+export CR_HOME=${CHROME_SRC}
+export WK_HOME=${CHROME_SRC}/third_party/WebKit
+export BK_HOME=${CHROME_SRC}/third_party/blink
+
+export CHROME_DEVEL_SANDBOX=/usr/local/sbin/chrome-devel-sandbox
+
+export PATH=${HOME}/depot_tools:${WK_HOME}/Tools/Scripts:${PATH}:${BK_HOME}/tools:${HOME}/crbuild
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+source "$DIR/chromium_aliases"
+
+GIT_PS1_PATH_SHORTENER["~/cr-home/src"]='~cr'
+GIT_PS1_PATH_SHORTENER["third_party/WebKit"]='~wk'
+

@@ -1,0 +1,36 @@
+alias ccr='cd $CR_HOME'
+alias cwk='cd $WK_HOME'
+
+alias goma-start='${GOMA_DIR}/goma_ctl.py ensure_start'
+alias goma-restart='${GOMA_DIR}/goma_ctl.py restart'
+alias goma-stop='${GOMA_DIR}/goma_ctl.py stop'
+
+alias rcr='cd $CR_HOME && git rebase-update'
+
+alias rbas='git rebase-update && gclient sync'
+
+alias bb='ninja -j 1000 -k 1000 -C out/Debug'
+alias bd='ninja -j 1000 -k 1000 -C out/Default'
+alias br='ninja -j 1000 -k 1000 -C out/Release'
+alias basan='ninja -j 1000 -k 1000 -C out/asan'
+alias ba='ninja -j 1000 -k 1000 -C out/Debug chrome_public_apk_incremental && out/Debug/bin/install_chrome_public_apk_incremental'
+
+bb-run() {
+  bb $1 && out/Debug/$1 ${@:2}
+}
+
+br-run() {
+  br $1 && out/Release/$1 ${@:2}
+}
+
+bd-run() {
+  bd $1 && out/Default/$1 ${@:2}
+}
+
+basan-run() {
+  basan $1 && out/asan/$1 ${@:2}
+}
+
+alias realiascr='source ~/bash_profile/chromium_aliases'
+
+export GYP_CHROMIUM_NO_ACTION=1
