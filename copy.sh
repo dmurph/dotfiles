@@ -9,9 +9,12 @@ BASH_PROFILE_STRING="source \"$DIR/bash_profile\""
 CHROMIUM_PROFILE_STRING="source \"$DIR/chromium_profile\""
 VIMRC_FILE="$HOME/.vimrc"
 VIMRC_STRING="source $DIR/vimrc"
+GITCONFIG_FILE="$HOME/.gitconfig"
+GITCONFIG_DOTFILE_FILE="$DIR/git-config"
+GITCONFIG_LOCAL_FILE="$DIR/gitconfig.local"
 
 echo "bash_profile..."
-if grep -q "$BASH_PROFILE_STRING" $BASH_PROFILE_FILE; then
+if grep -q "$BASH_PROFILE_STRING" "$BASH_PROFILE_FILE"; then
   echo -e "bash_profile already sourced in $BASH_PROFILE_FILE\n"
 else
   echo $BASH_PROFILE_STRING >> $BASH_PROFILE_FILE
@@ -19,7 +22,7 @@ else
 fi
 
 echo "chromium_profile..."
-if grep -q "$CHROMIUM_PROFILE_STRING" $BASH_PROFILE_FILE; then
+if grep -q "$CHROMIUM_PROFILE_STRING" "$BASH_PROFILE_FILE"; then
   echo -e "chromium_profile already sourced in $BASH_PROFILE_FILE.\n"
 else
   echo $CHROMIUM_PROFILE_STRING >> $BASH_PROFILE_FILE
@@ -27,10 +30,19 @@ else
 fi
 
 echo ".gitconfig..."
-ln -sf "$DIR/git-config" $HOME/.gitconfig
+ln -sf "$GITCONFIG_DOTFILE_FILE" "$GITCONFIG_FILE"
 echo -e "done.\n"
+
+echo "Ensuring gitconfig includes the correct local file..."
+if grep -q "gitconfig.local" "$GITCONFIG_DOTFILE_FILE"; then
+  echo -e "gitconfig.local already sourced in $GITCONFIG_DOTFILE_FILE.\n"
+else
+  echo -e "\n[include]\n  path=$GITCONFIG_LOCAL_FILE" >> $GITCONFIG_DOTFILE_FILE
+  echo -e "done.\n"
+fi
+
 echo ".vimrc..."
-if grep -q "$VIMRC_STRING" $VIMRC_FILE; then
+if grep -q "$VIMRC_STRING" "$VIMRC_FILE"; then
   echo -e "vimrc already sourced in $VIMRC_FILE.\n"
 else
   echo $VIMRC_STRING >> $VIMRC_FILE

@@ -89,8 +89,4 @@
   newHighlight = "green bold 22"
 
 [include]
-  # For username / github token / etc
-  path = gitconfig.local
-[user]
-	name = Daniel Murphy
-	email = dmurph@chromium.org
+  path=dotfiles/gitconfig.local
