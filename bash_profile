@@ -17,7 +17,10 @@ export LC_TIME=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 declare -A GIT_PS1_PATH_SHORTENER
-source "$DIR/ps1-shortener.local"
+
+if [ -f "$DIR/ps1-shortener.local" ]; then
+  source "$DIR/ps1-shortener.local"
+fi
 export GIT_PS1_PATH_SHORTENER
 
 if [ -f "$DIR/git-ps1.sh" ]; then
