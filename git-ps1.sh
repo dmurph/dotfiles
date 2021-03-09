@@ -39,6 +39,11 @@ if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
   GOT_GIT=1
 fi
 
+if [ -f $HOME/homebrew/etc/profile.d/bash_completion.sh ]; then
+  source $HOME/homebrew/etc/profile.d/bash_completion.sh
+  GOT_GIT=1
+fi
+
 if [ $GOT_GIT -eq 1 ]; then
   export PS1='${debian_chroot:+($debian_chroot)}\A \[\e[0;35m\]$(test "\u" != "dmurph" && echo "\u ")$(short_hostname "\H") \[\e[01;32m\]$(__git_ps1 "[%s]") \[\e[01;36m\]$(extra_shorten "\w")\[\e[01;00m\]$\[\e[00m\] '
 fi
