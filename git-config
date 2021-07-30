@@ -57,8 +57,6 @@
   commitempty = commit --allow-empty
   commitupload = commit --allow-empty -m "upload"
   mb = merge-base @{upstream} HEAD
-[branch]
-  autosetuprebase = always
 [merge]
   conflictstyle = diff3
 [rerere]

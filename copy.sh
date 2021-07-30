@@ -9,9 +9,11 @@ BASH_PROFILE_STRING="source \"$DIR/bash_profile\""
 CHROMIUM_PROFILE_STRING="source \"$DIR/chromium_profile\""
 VIMRC_FILE="$HOME/.vimrc"
 VIMRC_STRING="source $DIR/vimrc"
-GITCONFIG_FILE="$HOME/.gitconfig"
-GITCONFIG_DOTFILE_FILE="$DIR/git-config"
+GITCONFIG_DOTFILE_FILE="$HOME/.gitconfig"
+GITCONFIG_FILE="$DIR/git-config"
 GITCONFIG_LOCAL_FILE="$DIR/gitconfig.local"
+EMACS_FILE="$DIR/emacs"
+EMACS_DOTFILE_FILE="$HOME/.emacs"
 
 echo "bash_profile..."
 if grep -q "$BASH_PROFILE_STRING" "$BASH_PROFILE_FILE"; then
@@ -30,7 +32,7 @@ else
 fi
 
 echo ".gitconfig..."
-ln -sf "$GITCONFIG_DOTFILE_FILE" "$GITCONFIG_FILE"
+ln -sf "$GITCONFIG_FILE" "$GITCONFIG_DOTFILE_FILE"
 echo -e "done.\n"
 
 echo "Ensuring gitconfig includes the correct local file..."
@@ -48,6 +50,11 @@ else
   echo $VIMRC_STRING >> $VIMRC_FILE
   echo -e "done.\n"
 fi
+
+echo ".emacs..."
+ln -sf "$EMACS_FILE" "$EMACS_DOTFILE_FILE"
+echo -e "done.\n"
+
 echo "Complete."
 
 echo ""

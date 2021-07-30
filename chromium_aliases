@@ -1,13 +1,11 @@
 alias ccr='cd $CR_HOME'
 alias cwk='cd $WK_HOME'
 
-alias goma-start='${GOMA_DIR}/goma_ctl.py ensure_start'
-alias goma-restart='${GOMA_DIR}/goma_ctl.py restart'
-alias goma-stop='${GOMA_DIR}/goma_ctl.py stop'
+alias goma-start='goma_ctl ensure_start'
+alias goma-restart='goma_ctl restart'
+alias goma-stop='goma_ctl stop'
 
-alias rcr='cd $CR_HOME && git rebase-update'
-
-alias rbas='git rebase-update && gclient sync'
+alias rbas='git rebase-update && gclient sync -D'
 
 alias bb='ninja -j 1000 -k 1000 -C out/Debug'
 alias bd='ninja -j 1000 -k 1000 -C out/Default'
