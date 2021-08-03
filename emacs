@@ -1,3 +1,4 @@
+;; -*- mode: elisp -*-
 ;; ____________________________________________________________________________
 ;; Aquamacs custom-file warning:
 ;; Warning: After loading this .emacs file, Aquamacs will also load
@@ -7,8 +8,6 @@
 ;; is loaded after `custom-file':
 ;; ~/Library/Preferences/Aquamacs Emacs/Preferences
 ;; _____________________________________________________________________________
-
-;; -*- mode: elisp -*-
 
 ;; Disable the splash screen (to enable it agin, replace the t with 0)
 (setq inhibit-splash-screen t)
@@ -23,22 +22,25 @@
 ;; Make Org mode work with files ending in .org
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 
-(setq org-directory "~/Documents/org")
-(setq org-agenda-files (list "~/Documents/org/inbox.org"
-                             "~/Documents/org/project.org"
-			     "~/Documents/org/tickler.org"))
+(setq org-directory "~/org")
+(setq org-agenda-files (list "~/org/inbox.org"
+                             "~/org/gtd.org"
+			     "~/org/tickler.org"))
 			     
 (define-key global-map (kbd "C-c a") 'org-agenda)
 
-(setq org-refile-targets (quote (("~/Documents/org/project.org" :maxlevel . 3)
-                                 ("~/Documents/org/tickler.org" :level . 1)
-                                 ("~/Documents/org/someday.org" :level . 2))))
+(setq org-refile-targets '(("~/org/gtd.org" :maxlevel . 3)
+                           ("~/org/someday.org" :level . 1)
+                           ("~/org/tickler.org" :maxlevel . 2)))
 				 
 
+
 (setq org-capture-templates
-       `(("i" "Inbox" entry  (file "inbox.org")
+       `(("i" "Inbox" entry  (file+headline "~/org/inbox.org" "Tasks")
         ,(concat "* TODO %?\n"
-                 "/Entered on/ %U"))))
+                 "/Entered on/ %U"))
+	("T" "Tickler" entry (file+headline "~/org/tickler.org" "Tickler")
+                 "* %i%? \n %U")))
 
 (define-key global-map (kbd "C-c c") 'org-capture)
 
