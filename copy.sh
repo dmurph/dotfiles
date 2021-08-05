@@ -12,7 +12,7 @@ VIMRC_STRING="source $DIR/vimrc"
 GITCONFIG_DOTFILE_FILE="$HOME/.gitconfig"
 GITCONFIG_FILE="$DIR/git-config"
 GITCONFIG_LOCAL_FILE="$DIR/gitconfig.local"
-EMACS_FILE="$DIR/emacs"
+EMACS_FILE="$DIR/init.el"
 EMACS_DOTFILE_FILE="$HOME/.emacs"
 
 echo "bash_profile..."
