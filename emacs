@@ -36,12 +36,11 @@
 
 
 (setq org-capture-templates
-      `(("i" "Inbox" entry  (file+headline "~/org/inbox.org" "Tasks")
-	 ,(concat "* TODO %?\n"
+       `(("i" "Inbox" entry  (file+headline "~/org/inbox.org" "Tasks")
+        ,(concat "* TODO %?\n"
                  "/Entered on/ %U"))
 	("T" "Tickler" entry (file+headline "~/org/tickler.org" "Tickler")
-	 "* %i%? \n"
-	 "/Entered on/ %U")))
+                 "* %i%? \n %U")))
 
 (define-key global-map (kbd "C-c c") 'org-capture)
 
