@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 function extra_shorten() {
   out=$1
@@ -21,6 +21,11 @@ function short_hostname() {
 GOT_GIT=0
 if [ -f /etc/bash_completion.d/git5 ]; then
   source /etc/bash_completion.d/git5
+  GOT_GIT=1
+fi
+
+if [ -f /usr/share/bash-completion/completions/git ]; then
+  source /usr/share/bash-completion/completions/git
   GOT_GIT=1
 fi
 
