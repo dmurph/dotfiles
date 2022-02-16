@@ -32,7 +32,7 @@ basan-run() {
 git-grep-replace() {
     eval s1="$1"
     eval s2="$2"
-    git grep ${s1} $3 | cut -f 1 -d : | sort | uniq | xargs sed -i "s/${s1}/${s2}/g"
+    git grep ${s1} $3 | cut -f 1 -d : | sort | uniq | xargs sed -i "s@${s1}@${s2}@g"
 }
 
 alias realiascr='source ~/bash_profile/chromium_aliases'
