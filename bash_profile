@@ -3,9 +3,8 @@ export PATH=/usr/local/sbin:$PATH
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-if [ -f /usr/local/etc/bash_completion.d/git-prompt.sh ]; then
-	source /usr/local/etc/bash_completion.d/git-prompt.sh
-fi
+export BASH_COMPLETION_COMPAT_DIR="/opt/homebrew/etc/bash_completion.d"
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
 export LANG=en_US.UTF-8
 export LC_COLLATE=en_US.UTF-8
