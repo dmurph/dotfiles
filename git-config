@@ -90,3 +90,5 @@
 [include]
   path=dotfiles/gitconfig.local
 
+[http]
+	cookiefile = /usr/local/google/home/dmurph/.gitcookies
