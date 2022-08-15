@@ -36,7 +36,7 @@
   lo = log --relative-date origin/HEAD..
   lf = log --relative-date --first-parent
   lp = log --relative-date -p
-  sort-headers = !tools/git/for-all-touched-files.py -c 'tools/sort-headers.py -f [[FILENAME]]'
+  ln = log --relative-date --name-only
 
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
@@ -57,6 +57,7 @@
   commitempty = commit --allow-empty
   commitupload = commit --allow-empty -m "upload"
   mb = merge-base @{upstream} HEAD
+  rbc = rebase --continue
 [merge]
   conflictstyle = diff3
 [rerere]
