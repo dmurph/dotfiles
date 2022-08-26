@@ -7,6 +7,8 @@ alias goma-stop='goma_ctl stop'
 
 alias rbas='git rebase-update && gclient sync -D'
 
+alias start='git rebase-update && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && br chrome browser_tests unit_tests'
+
 alias bb='ninja -j 1000 -k 1000 -C out/Debug'
 alias bd='ninja -j 1000 -k 1000 -C out/Default'
 alias br='ninja -j 1000 -k 1000 -C out/Release'
@@ -35,6 +37,6 @@ git-grep-replace() {
     git grep ${s1} $1 | cut -f 1 -d : | sort | uniq | xargs sed -i "s@${s1}@${s2}@g"
 }
 
-alias realiascr='source ~/bash_profile/chromium_aliases'
+alias realiascr='source ~/dotfiles/chromium_aliases'
 
 export GYP_CHROMIUM_NO_ACTION=1
