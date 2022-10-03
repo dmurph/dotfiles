@@ -7,11 +7,34 @@
   s = status
   b = branch -vv
   c = checkout
+  f = fetch
+  fo = fetch origin
+
+  # checkout variants
+  c = checkout
+  cm = checkout main
+  co = checkout origin/main
+  cu = checkout @{upstream}
+  cb = checkout -b
 
   # diff variants
-  d = diff
+  d = diff --color-words
+  dt = difftool --dir-diff
   dn = diff --name-only
   ds = diff --stat
+
+  # diff variants with cached index
+  dc = diff --color-words --cached
+  dcn = diff --color-words --cached --name-only
+  dnc = diff --color-words --cached --name-only
+  dcs = diff --color-words --cached --stat
+  dsc = diff --color-words --cached --stat
+  dch = diff --color-words --cached
+  dhc = diff --color-words --cached
+  dco = diff --color-words --cached origin/master
+  doc = diff --color-words --cached origin/master
+  dcu = diff --color-words --cached @{upstream}
+  duc = diff --color-words --cached @{upstream}
 
   # diff variants with origin
   dc = diff --cached
@@ -21,14 +44,35 @@
   don = diff --name-only origin/HEAD...
   dso = diff --stat origin/HEAD...
   dos = diff --stat origin/HEAD...
+
+  # diff variants with head
+  dh = diff --color-words HEAD
+  dht = difftool --dir-diff HEAD
+  dth = difftool --dir-diff HEAD
+  dhn = diff --name-only HEAD
+  dnh = diff --name-only HEAD
+  dhs = diff --stat HEAD
+  dsh = diff --stat HEAD
+
+  # diff variants with origin/main
+  do = diff --color-words origin/main...
+  dot = difftool --dir-diff origin/main...
+  dto = difftool --dir-diff origin/main...
+  don = diff --name-only origin/main...
+  dno = diff --name-only origin/main...
+  dos = diff --stat origin/main...
+  dso = diff --stat origin/main...
+
   # diff variants with upstream
-
-  du = diff @{upstream}...
-  dnu = diff --name-only @{upstream}...
+  du = diff --color-words @{upstream}...
+  dut = difftool --dir-diff @{upstream}...
+  dtu = difftool --dir-diff @{upstream}...
   dun = diff --name-only @{upstream}...
-  dsu = diff --stat @{upstream}...
+  dnu = diff --name-only @{upstream}...
   dus = diff --stat @{upstream}...
+  dsu = diff --stat @{upstream}...
 
+  # log variants
   l = log --relative-date
   ls = log --relative-date --stat
   l1 = log --relative-date --oneline
@@ -37,33 +81,51 @@
   lf = log --relative-date --first-parent
   lp = log --relative-date -p
   ln = log --relative-date --name-only
+  lme = log --relative-date --author=dmurph
 
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
-  conflicts = diff --name-only --diff-filter=U
-  set-upstream-master = "!f(){ git branch --set-upstream $(git rev-parse --abbrev-ref HEAD) origin/master; };f"
-  track-master = "!f(){ git branch --set-upstream $(git rev-parse --abbrev-ref HEAD) origin/master; };f"
-
-  # retires a branch by renaming it to zMONTH-DAY-name. Use: git bretire branchname
-  # this one allows autocomplete.
-  bretire = "!f(){ git branch -m $1 z$(date +%m-%d-)$1; };f"
-  #bretire_safer = "!f(){ [ "$1." != "." ] && git branch -m $1 z$(date +%m-%d-)$1 || echo "Usage: git bretire branchname"; };f"
-
-  cwip = commit -a -m "WIP"
+  # commit
   cam = commit -a -m
-  commitamend = commit --amend -C HEAD
+  cwip = commit -a -m "WIP"
   amenda = commit --amend -C HEAD -a
+  commitamend = commit --amend -C HEAD
   commitempty = commit --allow-empty
-  commitupload = commit --allow-empty -m "upload"
+
+
+  # misc
+  conflicts = diff --name-only --diff-filter=U
+  mb = merge-base @{upstream} HEAD
+  pullne = pull --no-edit # Do not open editor for a merge commit message.
+  set-upstream-main = branch --set-upstream-to=origin/main
+  set-upstream-lkcr = branch --set-upstream-to=origin/lkcr
+  set-upstream-lkgr = branch --set-upstream-to=origin/lkgr
   mb = merge-base @{upstream} HEAD
   rbc = rebase --continue
+
+  # Chromium depot_tools specific
+  nd = nav-downstream
+  nu = nav-upstream
+  m = map-branches
+
+[branch]
+  autosetupmerge = always
+[difftool]
+  prompt = false
 [merge]
   conflictstyle = diff3
+  stat = false  # Suppress status update after merges, as Chromium merges are huge.
+[mergetool]
+  prompt = false
+[pull]
+  rebase = false  # Merge is default; specified to suppress option message.
 [rerere]
   enabled = 1
 [diff]
   renames = copies
+[pager]
+  branch = false  # No need to use 'less' or other pagers when listing branches.
 [color]
   ui = auto
 [color "branch"]
