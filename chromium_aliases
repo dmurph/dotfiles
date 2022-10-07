@@ -7,7 +7,7 @@ alias goma-stop='goma_ctl stop'
 
 alias rbas='git rebase-update && gclient sync -D'
 
-alias start='git rebase-update && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
+alias start='git cm && git fo && git merge && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
 
 alias bb='ninja -j 1000 -k 1000 -C out/Debug'
 alias bd='ninja -j 1000 -k 1000 -C out/Default'
