@@ -9,27 +9,24 @@ alias rbas='git rebase-update && gclient sync -D'
 
 alias start='git cm && git fo && git merge && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
 
-alias bb='ninja -j 1000 -k 1000 -C out/Debug'
-alias bd='ninja -j 1000 -k 1000 -C out/Default'
-alias br='ninja -j 1000 -k 1000 -C out/Release'
-alias basan='ninja -j 1000 -k 1000 -C out/asan'
+build() {
+  autoninja -k 1000 -C $1 ${@:2}
+}
+
+alias bcros='build out/CrOS'
+alias blacros='build out_linux_lacros/Release'
+alias br='build out/Release'
+alias basan='build out/asan'
 alias ba='ninja -j 1000 -k 1000 -C out/Debug chrome_public_apk_incremental && out/Debug/bin/install_chrome_public_apk_incremental'
 
-bb-run() {
-  bb $1 && out/Debug/$1 ${@:2}
+build-run-xvfb() {
+  build $1 $2 && testing/run_with_dummy_home.py testing/xvfb.py $1/$2 ${@:3}
 }
 
-br-run() {
-  br $1 && out/Release/$1 ${@:2}
-}
-
-bd-run() {
-  bd $1 && out/Default/$1 ${@:2}
-}
-
-basan-run() {
-  basan $1 && out/asan/$1 ${@:2}
-}
+alias br-run='build-run-xvfb out/Release'
+alias basan-run='build-run-xvfb out/asan'
+alias bcros-run='build-run-xvfb out/CrOS'
+alias blacros-run='build-run-xvfb out_linux_lacros/Release'
 
 git-grep-replace() {
     eval s1="$2"
