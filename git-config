@@ -103,6 +103,7 @@
   set-upstream-lkgr = branch --set-upstream-to=origin/lkgr
   mb = merge-base @{upstream} HEAD
   rbc = rebase --continue
+  mc = merge --continue
 
   # Chromium depot_tools specific
   nd = nav-downstream

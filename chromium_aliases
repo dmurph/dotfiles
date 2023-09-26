@@ -5,9 +5,12 @@ alias goma-start='goma_ctl ensure_start'
 alias goma-restart='goma_ctl restart'
 alias goma-stop='goma_ctl stop'
 
-alias rbas='git rebase-update && gclient sync -D'
+alias rbas='git fetch && git switch --detach origin/main && gclient sync -D && git rebase-update --no-fetch'
 
 alias start='git cm && git fo && git merge && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
+
+alias rbas-start='rbas && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
+alias continue-rbas-start='git rebase-update --no-fetch && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
 
 build() {
   autoninja -k 1000 -C $1 ${@:2}
@@ -27,6 +30,30 @@ alias br-run='build-run-xvfb out/Release'
 alias basan-run='build-run-xvfb out/asan'
 alias bcros-run='build-run-xvfb out/CrOS'
 alias blacros-run='build-run-xvfb out_linux_lacros/Release'
+
+br-ut() {
+  br-run unit_tests --gtest_filter=$1 ${@:2}
+}
+
+basan-ut() {
+  basan-run unit_tests --gtest_filter=$1 ${@:2}
+}
+
+bcros-ut() {
+  bcros-run unit_tests --gtest_filter=$1 ${@:2}
+}
+
+br-bt() {
+  br-run browser_tests --gtest_filter=$1 ${@:2}
+}
+
+basan-bt() {
+  basan-run browser_tests --gtest_filter=$1 ${@:2}
+}
+
+bcros-bt() {
+  bcros-run browser_tests --gtest_filter=$1 ${@:2}
+}
 
 git-grep-replace() {
     eval s1="$2"
