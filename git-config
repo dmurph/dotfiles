@@ -3,6 +3,8 @@
 [core]
   autocrlf = false
   filemode = false
+	untrackedCache = true
+	fsmonitor = true
 [alias]
   s = status
   b = branch -vv
