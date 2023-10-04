@@ -1,16 +1,12 @@
 alias ccr='cd $CR_HOME'
 alias cwk='cd $WK_HOME'
 
-alias goma-start='goma_ctl ensure_start'
-alias goma-restart='goma_ctl restart'
-alias goma-stop='goma_ctl stop'
+alias rbas='git fetch origin main && git switch --detach origin/main && gclient sync -D && git rebase-update --no-fetch'
 
-alias rbas='git fetch && git switch --detach origin/main && gclient sync -D && git rebase-update --no-fetch'
+alias start='git cm && git fo && git merge && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && br chrome browser_tests unit_tests'
 
-alias start='git cm && git fo && git merge && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
-
-alias rbas-start='rbas && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
-alias continue-rbas-start='git rebase-update --no-fetch && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && goma_ctl ensure_start && br chrome browser_tests unit_tests'
+alias rbas-start='rbas && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && br chrome browser_tests unit_tests'
+alias continue-rbas-start='git rebase-update --no-fetch && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json &&  br chrome browser_tests unit_tests'
 
 build() {
   autoninja -k 1000 -C $1 ${@:2}
