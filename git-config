@@ -113,7 +113,7 @@
   m = map-branches
 
 [branch]
-  autosetupmerge = always
+  autosetuprebase = always
 [difftool]
   prompt = false
 [merge]
@@ -122,7 +122,7 @@
 [mergetool]
   prompt = false
 [pull]
-  rebase = false  # Merge is default; specified to suppress option message.
+  rebase = true
 [rerere]
   enabled = 1
 [diff]
