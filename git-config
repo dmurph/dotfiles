@@ -6,6 +6,7 @@
 	untrackedCache = true
 	fsmonitor = true
 [alias]
+  a = add ':(exclude,attr:builtin_objectmode=160000)'
   s = status
   b = branch -vv
   c = checkout
@@ -20,10 +21,10 @@
   cb = checkout -b
 
   # diff variants
-  d = diff --color-words
+  d = diff --color-words --ignore-submodules
   dt = difftool --dir-diff
-  dn = diff --name-only
-  ds = diff --stat
+  dn = diff --name-only --ignore-submodules
+  ds = diff --stat --ignore-submodules
 
   # diff variants with cached index
   dc = diff --color-words --cached
@@ -51,19 +52,19 @@
   dh = diff --color-words HEAD
   dht = difftool --dir-diff HEAD
   dth = difftool --dir-diff HEAD
-  dhn = diff --name-only HEAD
-  dnh = diff --name-only HEAD
-  dhs = diff --stat HEAD
-  dsh = diff --stat HEAD
+  dhn = diff --name-only --ignore-submodules HEAD
+  dnh = diff --name-only --ignore-submodules HEAD
+  dhs = diff --stat --ignore-submodules HEAD
+  dsh = diff --stat --ignore-submodules HEAD
 
   # diff variants with origin/main
-  do = diff --color-words origin/main...
+  do = diff --color-words --ignore-submodules origin/main...
   dot = difftool --dir-diff origin/main...
   dto = difftool --dir-diff origin/main...
-  don = diff --name-only origin/main...
-  dno = diff --name-only origin/main...
-  dos = diff --stat origin/main...
-  dso = diff --stat origin/main...
+  don = diff --name-only --ignore-submodules origin/main...
+  dno = diff --name-only --ignore-submodules origin/main...
+  dos = diff --stat --ignore-submodules origin/main...
+  dso = diff --stat --ignore-submodules origin/main...
 
   # diff variants with upstream
   du = diff --color-words @{upstream}...
@@ -89,11 +90,11 @@
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
   # commit
-  cam = commit -a -m
-  cwip = commit -a -m "WIP"
-  amenda = commit --amend -C HEAD -a
-  commitamend = commit --amend -C HEAD
-  commitempty = commit --allow-empty
+  cam = -c diff.ignoreSubmodules=all commit -a -m
+  cwip = -c diff.ignoreSubmodules=all commit -a -m "WIP"
+  amenda = -c diff.ignoreSubmodules=all commit --amend -C HEAD -a
+  commitamend = -c diff.ignoreSubmodules=all commit --amend -C HEAD
+  commitempty = -c diff.ignoreSubmodules=all commit --allow-empty
 
 
   # misc

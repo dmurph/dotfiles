@@ -18,6 +18,10 @@ alias br='build out/Release'
 alias basan='build out/asan'
 alias ba='ninja -j 1000 -k 1000 -C out/Debug chrome_public_apk_incremental && out/Debug/bin/install_chrome_public_apk_incremental'
 
+run-xvfb() {
+  testing/run_with_dummy_home.py testing/xvfb.py $1/$2 ${@:3}
+}
+
 build-run-xvfb() {
   build $1 $2 && testing/run_with_dummy_home.py testing/xvfb.py $1/$2 ${@:3}
 }
