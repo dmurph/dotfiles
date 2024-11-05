@@ -156,7 +156,7 @@
   newHighlight = "green bold 22"
 
 [include]
-  path=gitconfig.local
+  path=dotfiles/gitconfig.local
 
 [maintenance]
   auto = true
@@ -166,3 +166,8 @@
 [maintenance.prefetch]
   enabled = false
 
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
