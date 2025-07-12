@@ -6,33 +6,54 @@ alias rbas='git fetch origin main && git switch --detach origin/main && gclient 
 alias start='git cm && git fo && git merge && gclient sync -D && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && br chrome browser_tests unit_tests'
 
 alias rbas-start='rbas && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json && br chrome browser_tests unit_tests'
-alias continue-rbas-start='git rebase-update --no-fetch && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json &&  br chrome browser_tests unit_tests'
+alias continue-rbas-start='git switch --detach origin/main && git rebase-update --no-fetch && gn gen -C out/Release && tools/clang/scripts/generate_compdb.py -p out/Release > compile_commands.json &&  br chrome browser_tests unit_tests'
 
 build() {
   autoninja -k 1000 -C $1 ${@:2}
 }
 
-alias bcros='build out/CrOS'
+CROS_BUILD_DIR='out_cros/Release'
+
+alias bcros='build ${CROS_BUILD_DIR}'
 alias blacros='build out_linux_lacros/Release'
 alias br='build out/Release'
 alias basan='build out/asan'
 alias ba='ninja -j 1000 -k 1000 -C out/Debug chrome_public_apk_incremental && out/Debug/bin/install_chrome_public_apk_incremental'
+alias bd='build out/Default'
 
 run-xvfb() {
-  testing/run_with_dummy_home.py testing/xvfb.py $1/$2 ${@:3}
+  testing/xvfb.py testing/run_with_dummy_home.py $1/$2 ${@:3}
+}
+
+run-no-xvfb() {
+  testing/xvfb.py testing/run_with_dummy_home.py $1/$2 ${@:3}
 }
 
 build-run-xvfb() {
-  build $1 $2 && testing/run_with_dummy_home.py testing/xvfb.py $1/$2 ${@:3}
+  build $1 $2 && testing/xvfb.py testing/run_with_dummy_home.py $1/$2 ${@:3}
 }
 
+build-run-no-xvfb() {
+  build $1 $2 && testing/run_with_dummy_home.py $1/$2 ${@:3}
+}
+
+alias br-run-novx='build-run-no-xvfb out/Release'
 alias br-run='build-run-xvfb out/Release'
+alias bd-run='build-run-xvfb out/Default'
 alias basan-run='build-run-xvfb out/asan'
-alias bcros-run='build-run-xvfb out/CrOS'
+alias bcros-run='build-run-xvfb ${CROS_BUILD_DIR}'
 alias blacros-run='build-run-xvfb out_linux_lacros/Release'
 
-br-ut() {
+br-ut-vx() {
   br-run unit_tests --gtest_filter=$1 ${@:2}
+}
+
+bd-ut-vx() {
+  build-run-xvfb out/Default unit_tests --gtest_filter=$1 ${@:2}
+}
+
+br-ut() {
+  br-run-novx unit_tests --gtest_filter=$1 ${@:2}
 }
 
 basan-ut() {

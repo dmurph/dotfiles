@@ -1,10 +1,9 @@
-# symlink from your home directory: ln -s git-config/git-config .gitconfig
-
 [core]
   autocrlf = false
   filemode = false
-	untrackedCache = true
-	fsmonitor = true
+  untrackedCache = true
+  fsmonitor = true
+
 [alias]
   a = add ':(exclude,attr:builtin_objectmode=160000)'
   s = status
@@ -21,7 +20,7 @@
   cb = checkout -b
 
   # diff variants
-  d = diff --color-words --ignore-submodules
+  d = diff --word-diff --color-words --ignore-submodules
   dt = difftool --dir-diff
   dn = diff --name-only --ignore-submodules
   ds = diff --stat --ignore-submodules
@@ -40,16 +39,16 @@
   duc = diff --color-words --cached @{upstream}
 
   # diff variants with origin
-  dc = diff --cached
-  dh = diff HEAD
-  do = diff origin/HEAD...
+  dc = diff --word-diff --cached
+  dh = diff --word-diff HEAD
+  do = diff --word-diff origin/HEAD...
   dno = diff --name-only origin/HEAD...
   don = diff --name-only origin/HEAD...
   dso = diff --stat origin/HEAD...
   dos = diff --stat origin/HEAD...
 
   # diff variants with head
-  dh = diff --color-words HEAD
+  dh = diff --word-diff  --color-words HEAD
   dht = difftool --dir-diff HEAD
   dth = difftool --dir-diff HEAD
   dhn = diff --name-only --ignore-submodules HEAD
@@ -58,7 +57,7 @@
   dsh = diff --stat --ignore-submodules HEAD
 
   # diff variants with origin/main
-  do = diff --color-words --ignore-submodules origin/main...
+  do = diff --word-diff --color-words --ignore-submodules origin/main...
   dot = difftool --dir-diff origin/main...
   dto = difftool --dir-diff origin/main...
   don = diff --name-only --ignore-submodules origin/main...
@@ -85,6 +84,7 @@
   lp = log --relative-date -p
   ln = log --relative-date --name-only
   lme = log --relative-date --author=dmurph
+  ls = log -p -S
 
   lol = log --graph --decorate --pretty=oneline --abbrev-commit
   lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
@@ -96,10 +96,12 @@
   commitamend = -c diff.ignoreSubmodules=all commit --amend -C HEAD
   commitempty = -c diff.ignoreSubmodules=all commit --allow-empty
 
+  # blame
+  bc = blame -w -C
+  bcc = blame -w -C -C
 
   # misc
   conflicts = diff --name-only --diff-filter=U
-  mb = merge-base @{upstream} HEAD
   pullne = pull --no-edit # Do not open editor for a merge commit message.
   set-upstream-main = branch --set-upstream-to=origin/main
   set-upstream-lkcr = branch --set-upstream-to=origin/lkcr
@@ -125,7 +127,7 @@
 [pull]
   rebase = true
 [rerere]
-  enabled = 1
+  enabled = true
 [diff]
   renames = copies
 [pager]
@@ -154,4 +156,13 @@
   newHighlight = "green bold 22"
 
 [include]
-  path=dotfiles/gitconfig.local
+  path=gitconfig.local
+
+[maintenance]
+  auto = true
+  strategy = incremental
+  repo = /usr/local/google/home/dmurph/cr-home/src
+
+[maintenance.prefetch]
+  enabled = false
+
